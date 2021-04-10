@@ -84,7 +84,7 @@ class DetallePage extends StatelessWidget {
           borderRadius: BorderRadius.only(topLeft: Radius.circular(70)),
         ),
         onPressed: () {
-          // TODO: Insert in wish list
+          // TODO: Insertar in wish list
           _showSnackbar(context);
         },
       ),
@@ -95,6 +95,7 @@ class DetallePage extends StatelessWidget {
     _scaffoldKey.currentState
         .showSnackBar(
           SnackBar(
+            backgroundColor: Colors.grey.shade400,
             content: Text('Artículo añadido al carrito'),
             duration: Duration(milliseconds: 1000),
           ),

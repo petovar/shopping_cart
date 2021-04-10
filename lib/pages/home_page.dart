@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shopping_cart/bloc/whislist/repositorio_bloc.dart';
 import 'package:shopping_cart/bloc/whislist/wishlist_bloc.dart';
 // import 'package:shopping_cart/models/producto_model.dart';
 // import 'package:shopping_cart/providers/productos_provider.dart';
@@ -43,12 +42,9 @@ class HomePage extends StatelessWidget {
             Navigator.of(context).pushNamed('cart', arguments: Null);
           },
         ),
-        // SizedBox(
-        //   height: 10,
-        // ),
         StreamBuilder(
           stream: bloc.counterStream,
-          initialData: 0,
+          //initialData: 0,
           builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
             print(snapshot);
             return Text('${snapshot.data}',
@@ -74,9 +70,8 @@ class HomePage extends StatelessWidget {
         ),
         FutureBuilder<List<Item>>(
           //TODO mas de dos peticiones
-          // future: _productosProvider.cargarProductos(),
+
           future: _itemsProvider.requestItems(),
-          // initialData: [],
           builder: (context, snapshot) {
             // print('status connection ${snapshot.connectionState}');
 

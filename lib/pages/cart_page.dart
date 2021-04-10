@@ -41,32 +41,37 @@ class CartPage extends StatelessWidget {
   }
 
   Widget _btnAdd(Size size, BuildContext context) {
+    final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
+      onPrimary: Colors.black87,
+      primary: Colors.black,
+      minimumSize: Size(88, 36),
+      padding: EdgeInsets.all(16.0),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(70)),
+      ),
+    );
+
     return Container(
       margin: EdgeInsets.zero,
       width: size.width * 0.70,
-      child: RaisedButton(
-        color: Colors.black,
-        textColor: Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Text(
-            'Proceder ...',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-          ),
-        ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(70)),
-        ),
+      child: ElevatedButton(
+        style: raisedButtonStyle,
         onPressed: () {
-          // TODO: Limpiar wish list - Realizar la compra
+          // TODO: Insertar in wish list
+          //bloc.sendEvent;
           _showSnackbar(context);
         },
+        child: Text(
+          'Proceder...',
+          style: TextStyle(
+              fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
+        ),
       ),
     );
   }
 
   _showSnackbar(BuildContext context) {
-    _scaffoldKey.currentState
+    ScaffoldMessenger.of(context)
         .showSnackBar(
           SnackBar(
             backgroundColor: Colors.grey.shade400,
@@ -75,6 +80,11 @@ class CartPage extends StatelessWidget {
           ),
         )
         .closed
-        .then((value) => Navigator.of(context).pop());
+        .then(
+          (value) => Future.delayed(
+            const Duration(milliseconds: 100),
+            () => Navigator.of(context).pop(),
+          ),
+        );
   }
 }

@@ -12,17 +12,22 @@ class WishlistBloc {
   //
   RepositorioBloc _repositorio = RepositorioBloc();
   //
-
   StreamController<WishlistBase> _entrada = StreamController();
   StreamController<int> _salida = StreamController();
-
-  Stream<int> get counterStream => _salida.stream;
-  StreamSink<WishlistBase> get sendEvent => _entrada.sink;
-
-  WishlistBloc() {
-    _entrada.stream.listen(_onEvent);
+  //
+  // Stream<int> get counterStream => _salida.stream;
+  Stream<int> get counterStream async* {
+    _salida.stream;
+    yield _repositorio.get();
   }
 
+  StreamSink<WishlistBase> get sendEvent => _entrada.sink;
+  //
+  WishlistBloc() {
+    _salida.add(_repositorio.get());
+    _entrada.stream.listen(_onEvent);
+  }
+  //
   dispose() {
     _entrada.close();
     _salida.close();
@@ -36,7 +41,7 @@ class WishlistBloc {
         _repositorio.disminuir();
       }
     }
-    print(_repositorio.get());
+    //print(_repositorio.get());
     _salida.add(_repositorio.get());
   }
 }

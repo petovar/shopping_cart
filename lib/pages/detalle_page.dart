@@ -65,34 +65,37 @@ class DetallePage extends StatelessWidget {
   }
 
   Widget _btnAdd(Size size, BuildContext context, Item producto) {
+    final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
+      onPrimary: Colors.black87,
+      primary: Colors.black,
+      minimumSize: Size(88, 36),
+      padding: EdgeInsets.all(16.0),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(70)),
+      ),
+    );
+
     return Container(
       margin: EdgeInsets.zero,
       width: size.width * 0.70,
-      child: RaisedButton(
-        color: Colors.black,
-        textColor: Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Text(
-            'Añadir al carrito',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-          ),
-        ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(70)),
-        ),
+      child: ElevatedButton(
+        style: raisedButtonStyle,
         onPressed: () {
           // TODO: Insertar in wish list
-          // listadoBloc.addProducto((producto);
-          bloc.sendEvent;
+          bloc.sendEvent.add(AddProducto());
           _showSnackbar(context);
         },
+        child: Text(
+          'Añadir al carrito',
+          style: TextStyle(
+              fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
+        ),
       ),
     );
   }
 
   _showSnackbar(BuildContext context) {
-    _scaffoldKey.currentState
+    ScaffoldMessenger.of(context)
         .showSnackBar(
           SnackBar(
             backgroundColor: Colors.grey.shade400,
@@ -101,6 +104,11 @@ class DetallePage extends StatelessWidget {
           ),
         )
         .closed
-        .then((value) => Navigator.of(context).pop());
+        .then(
+          (value) => Future.delayed(
+            const Duration(milliseconds: 100),
+            () => Navigator.of(context).pop(),
+          ),
+        );
   }
 }

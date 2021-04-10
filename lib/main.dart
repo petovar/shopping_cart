@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shopping_cart/bloc/whislist/wishlist_bloc.dart';
 import 'package:shopping_cart/pages/cart_page.dart';
 import 'package:shopping_cart/pages/detalle_page.dart';
 import 'package:shopping_cart/pages/home_page.dart';
@@ -10,6 +8,13 @@ void main() => runApp(MyApp());
 // class AppState extends StatelessWidget {
 //   @override
 //   Widget build(BuildContext context) {
+//     return MultiBlocProvider(
+//       key: ,
+//       List: [
+//         block
+//       ],
+//     )
+
 //     return MultiBlocProvider(
 
 //       providers: [
@@ -23,6 +28,7 @@ class MyApp extends StatelessWidget {
   final home = HomePage();
   final cart = CartPage();
   final detalle = DetallePage();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

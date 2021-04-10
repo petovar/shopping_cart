@@ -10,9 +10,6 @@ class ItemsProvider {
 
   Future<List<Item>> requestItems() async {
     var resp = await http.get(url);
-
-    print(resp);
-
     Map<String, dynamic> data = jsonDecode(resp.body);
     final items = ListItems.fromJson(data);
     return items.items;

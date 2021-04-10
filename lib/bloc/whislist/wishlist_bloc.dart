@@ -1,18 +1,42 @@
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
+import 'package:shopping_cart/bloc/whislist/repositorio_bloc.dart';
 
-part 'wishlist_event.dart';
-part 'wishlist_state.dart';
+class WishlistBase {}
 
-class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
-  WishlistBloc() : super(WishlistState());
+class AddProducto extends WishlistBase {}
 
-  @override
-  Stream<WishlistState> mapEventToState(
-    WishlistEvent event,
-  ) async* {
-    // TODO: implement mapEventToState
+class RemProducto extends WishlistBase {}
+
+class WishlistBloc {
+  //
+  RepositorioBloc _repositorio = RepositorioBloc();
+  //
+
+  StreamController<WishlistBase> _entrada = StreamController();
+  StreamController<int> _salida = StreamController();
+
+  Stream<int> get counterStream => _salida.stream;
+  StreamSink<WishlistBase> get sendEvent => _entrada.sink;
+
+  WishlistBloc() {
+    _entrada.stream.listen(_onEvent);
+  }
+
+  dispose() {
+    _entrada.close();
+    _salida.close();
+  }
+
+  void _onEvent(WishlistBase event) {
+    if (event is AddProducto) {
+      _repositorio.incrementar();
+    } else {
+      if (_repositorio.get() != 0) {
+        _repositorio.disminuir();
+      }
+    }
+    print(_repositorio.get());
+    _salida.add(_repositorio.get());
   }
 }

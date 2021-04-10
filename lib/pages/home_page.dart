@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_cart/bloc/whislist/repositorio_bloc.dart';
+import 'package:shopping_cart/bloc/whislist/wishlist_bloc.dart';
 // import 'package:shopping_cart/models/producto_model.dart';
 // import 'package:shopping_cart/providers/productos_provider.dart';
 import 'package:shopping_cart/models/list_items.dart';
@@ -6,6 +8,7 @@ import 'package:shopping_cart/providers/items_provider.dart';
 
 class HomePage extends StatelessWidget {
   final ItemsProvider _itemsProvider = ItemsProvider();
+  final WishlistBloc bloc = WishlistBloc();
   // final _productosProvider = ProductosProvider();
 
   @override
@@ -43,10 +46,17 @@ class HomePage extends StatelessWidget {
         // SizedBox(
         //   height: 10,
         // ),
-        Text('2',
-            style: TextStyle(
-              fontSize: 12.0,
-            )),
+        StreamBuilder(
+          stream: bloc.counterStream,
+          initialData: 0,
+          builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+            print(snapshot);
+            return Text('${snapshot.data}',
+                style: TextStyle(
+                  fontSize: 12.0,
+                ));
+          },
+        ),
       ],
     );
   }

@@ -15,13 +15,10 @@ class WishlistBloc {
   RepositorioBloc _repositorio = RepositorioBloc();
   //
   StreamController<WishlistBase> _entrada = StreamController();
-  StreamController<int> _salida = StreamController();
+  StreamController<int> _salida = StreamController<int>();
   //
   // Stream<int> get counterStream => _salida.stream;
-  Stream<int> get counterStream async* {
-    _salida.stream;
-    yield _repositorio.get();
-  }
+  Stream<int> get counterStream => _salida.stream;
 
   StreamSink<WishlistBase> get sendEvent => _entrada.sink;
   //
@@ -38,13 +35,14 @@ class WishlistBloc {
   void _onEvent(WishlistBase event) {
     if (event is AddProducto) {
       _repositorio.incrementar();
-    }
-    if (event is RemProducto) {
-      if (_repositorio.get() != 0) {
-        _repositorio.disminuir();
-      }
     } else {
-      _repositorio.clear();
+      if (event is RemProducto) {
+        if (_repositorio.get() != 0) {
+          _repositorio.disminuir();
+        }
+      } else {
+        _repositorio.clear();
+      }
     }
     //print(_repositorio.get());
     _salida.add(_repositorio.get());

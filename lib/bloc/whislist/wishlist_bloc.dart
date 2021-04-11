@@ -8,6 +8,8 @@ class AddProducto extends WishlistBase {}
 
 class RemProducto extends WishlistBase {}
 
+class ClearProductos extends WishlistBase {}
+
 class WishlistBloc {
   //
   RepositorioBloc _repositorio = RepositorioBloc();
@@ -36,10 +38,13 @@ class WishlistBloc {
   void _onEvent(WishlistBase event) {
     if (event is AddProducto) {
       _repositorio.incrementar();
-    } else {
+    }
+    if (event is RemProducto) {
       if (_repositorio.get() != 0) {
         _repositorio.disminuir();
       }
+    } else {
+      _repositorio.clear();
     }
     //print(_repositorio.get());
     _salida.add(_repositorio.get());

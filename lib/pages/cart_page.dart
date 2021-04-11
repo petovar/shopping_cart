@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_cart/bloc/whislist/wishlist_bloc.dart';
 
 class CartPage extends StatelessWidget {
+  final WishlistBloc bloc = WishlistBloc();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
@@ -59,6 +61,7 @@ class CartPage extends StatelessWidget {
         onPressed: () {
           // TODO: Insertar in wish list
           //bloc.sendEvent;
+          bloc.sendEvent.add(ClearProductos());
           _showSnackbar(context);
         },
         child: Text(

@@ -18,18 +18,18 @@ class HomePage extends StatelessWidget {
         elevation: 16.0,
         backgroundColor: Colors.black,
         title: Text(
-          'Tienda en línea',
+          'Tienda en línea ()',
           style: TextStyle(fontSize: 20.0, color: Colors.white),
         ),
         actions: [
-          _carritoLleno(context),
+          _carrito(context),
         ],
       ),
       body: _catalogoProductos(context),
     );
   }
 
-  Widget _carritoLleno(BuildContext context) {
+  Widget _carrito(BuildContext context) {
     return Stack(
       alignment: AlignmentDirectional.topCenter,
       children: [

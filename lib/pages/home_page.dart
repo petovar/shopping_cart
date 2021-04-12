@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:shopping_cart/bloc/whislist/wishlist_bloc.dart';
+// import 'package:shopping_cart/bloc/whislist/wishlist_bloc.dart';
 // import 'package:shopping_cart/models/producto_model.dart';
 // import 'package:shopping_cart/providers/productos_provider.dart';
 import 'package:shopping_cart/models/list_items.dart';
 import 'package:shopping_cart/providers/items_provider.dart';
+import 'package:shopping_cart/widgets/carrito.dart';
 
 class HomePage extends StatelessWidget {
   final ItemsProvider _itemsProvider = ItemsProvider();
-  final WishlistBloc bloc = WishlistBloc();
+  
+  
+  // final WishlistBloc bloc = WishlistBloc();
   // final _productosProvider = ProductosProvider();
 
   @override
@@ -18,44 +21,44 @@ class HomePage extends StatelessWidget {
         elevation: 16.0,
         backgroundColor: Colors.black,
         title: Text(
-          'Tienda en línea ()',
+          'Tienda en línea',
           style: TextStyle(fontSize: 20.0, color: Colors.white),
         ),
         actions: [
-          _carrito(context),
+          Carrito(),
         ],
       ),
       body: _catalogoProductos(context),
     );
   }
 
-  Widget _carrito(BuildContext context) {
-    return Stack(
-      alignment: AlignmentDirectional.topCenter,
-      children: [
-        IconButton(
-          icon: Icon(
-            Icons.shopping_cart,
-            color: Colors.yellowAccent,
-          ),
-          onPressed: () {
-            Navigator.of(context).pushNamed('cart', arguments: Null);
-          },
-        ),
-        StreamBuilder(
-          stream: bloc.counterStream,
-          //initialData: 0,
-          builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
-            print(snapshot);
-            return Text('${snapshot.data}',
-                style: TextStyle(
-                  fontSize: 12.0,
-                ));
-          },
-        ),
-      ],
-    );
-  }
+  // Widget _carrito(BuildContext context) {
+  //   return Stack(
+  //     alignment: AlignmentDirectional.topCenter,
+  //     children: [
+  //       IconButton(
+  //         icon: Icon(
+  //           Icons.shopping_cart,
+  //           color: Colors.yellowAccent,
+  //         ),
+  //         onPressed: () {
+  //           Navigator.of(context).pushNamed('cart', arguments: Null);
+  //         },
+  //       ),
+  //       StreamBuilder(
+  //         stream: bloc.counterStream,
+  //         //initialData: 0,
+  //         builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+  //           print(snapshot);
+  //           return Text('${snapshot.data}',
+  //               style: TextStyle(
+  //                 fontSize: 12.0,
+  //               ));
+  //         },
+  //       ),
+  //     ],
+  //   );
+  // }
 
   Widget _catalogoProductos(BuildContext context) {
     return CustomScrollView(
@@ -63,6 +66,8 @@ class HomePage extends StatelessWidget {
         SliverList(
           delegate: SliverChildListDelegate(
             <Widget>[
+
+              SizedBox(height: 10),
               _tituloSeccion('Catálogo'),
               SizedBox(height: 10),
             ],

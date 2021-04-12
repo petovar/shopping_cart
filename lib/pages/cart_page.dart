@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shopping_cart/bloc/listaDeseos/listadeseos_bloc.dart';
 import 'package:shopping_cart/bloc/whislist/wishlist_bloc.dart';
 
 class CartPage extends StatelessWidget {
@@ -22,27 +24,54 @@ class CartPage extends StatelessWidget {
           ListView(
             padding: EdgeInsets.zero,
             children: <Widget>[
-              _listadoWish(),
+              Expanded(
+                child: _listadoDeseos(),
+              )
             ],
           ),
           Align(
             alignment: Alignment.bottomRight,
-            child: _btnAdd(_size, context),
+            child: _btnProceder(_size, context),
           ),
         ],
       ),
     );
   }
 
-  Widget _listadoWish() {
-    return Container(
-      child: Center(
-        child: Text('La lista Wish'),
-      ),
+  Widget _listadoDeseos() {
+    return BlocBuilder<ListadeseosBloc, ListadeseosState>(
+      builder: (context, state) {
+        //final _listadoBloc = BlocProvider.of<ListadeseosBloc>(context);
+        final _listado = state.listado ?? [];
+        // print(state.listado[0]);
+        return Container(
+          child: Center(
+            child: Text('${_listado.length}'),
+          ),
+        );
+
+        // ListView.builder(
+        //   itemCount: _listado.length,
+        //   itemBuilder: (_, i) {
+        //     return Dismissible(
+        //       key: Key(_listado[i].id.toString()),
+        //       direction: DismissDirection.startToEnd,
+        //       onDismissed: (direction) {
+        //         // Remove the item from the data source.
+        //         _listadoBloc.add(DelItem(_listado[i]));
+        //         //items.removeAt(index);
+        //       },
+        //       child: ListTile(
+        //         title: Text('${_listado[i].name}'),
+        //       ),
+        //     );
+        //   },
+        // );
+      },
     );
   }
 
-  Widget _btnAdd(Size size, BuildContext context) {
+  Widget _btnProceder(Size size, BuildContext context) {
     final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
       onPrimary: Colors.black87,
       primary: Colors.black,
@@ -60,8 +89,7 @@ class CartPage extends StatelessWidget {
         style: raisedButtonStyle,
         onPressed: () {
           // TODO: Insertar in wish list
-          //bloc.sendEvent;
-          bloc.sendEvent.add(ClearProductos());
+          BlocProvider.of<ListadeseosBloc>(context).add(ClearLista());
           _showSnackbar(context);
         },
         child: Text(
@@ -72,7 +100,6 @@ class CartPage extends StatelessWidget {
       ),
     );
   }
-
   _showSnackbar(BuildContext context) {
     ScaffoldMessenger.of(context)
         .showSnackBar(

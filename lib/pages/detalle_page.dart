@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shopping_cart/bloc/listaDeseos/listadeseos_bloc.dart';
 import 'package:shopping_cart/bloc/whislist/wishlist_bloc.dart';
 import 'package:shopping_cart/models/item.dart';
 import 'package:shopping_cart/models/list_items.dart';
@@ -9,7 +11,7 @@ class DetallePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('entra build detail screen');
+    // print('entra build detail screen');
     final Item _clothe = ModalRoute.of(context).settings.arguments;
     final _size = MediaQuery.of(context).size;
 
@@ -82,7 +84,8 @@ class DetallePage extends StatelessWidget {
         style: raisedButtonStyle,
         onPressed: () {
           // TODO: Insertar in wish list
-          bloc.sendEvent.add(AddProducto());
+          BlocProvider.of<ListadeseosBloc>(context).add(AddItem(producto));
+          //bloc.sendEvent.add(AddProducto());
           _showSnackbar(context);
         },
         child: Text(

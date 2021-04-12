@@ -15,7 +15,9 @@ class Carrito extends StatelessWidget {
               IconButton(
                 icon: Icon(
                   Icons.shopping_cart,
-                  color: Colors.yellowAccent,
+                  color: state.count == 0
+                  ? Colors.white
+                  : Colors.yellow[900],
                 ),
                 onPressed: () {
                   Navigator.of(context).pushNamed('cart', arguments: Null);
@@ -25,6 +27,9 @@ class Carrito extends StatelessWidget {
                 '${state.count}',
                 style: TextStyle(
                 fontSize: 12.0,
+                color: state.count == 0 
+                  ? Colors.black
+                  : Colors.white
                 ),
               )],
           ),

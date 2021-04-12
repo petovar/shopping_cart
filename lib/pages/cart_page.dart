@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping_cart/bloc/listaDeseos/listadeseos_bloc.dart';
-import 'package:shopping_cart/bloc/whislist/wishlist_bloc.dart';
+
 
 class CartPage extends StatelessWidget {
-  final WishlistBloc bloc = WishlistBloc();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
@@ -19,15 +18,10 @@ class CartPage extends StatelessWidget {
           style: TextStyle(fontSize: 20.0, color: Colors.white),
         ),
       ),
-      body: Stack(
+      body: Column(
         children: <Widget>[
-          ListView(
-            padding: EdgeInsets.zero,
-            children: <Widget>[
-              Expanded(
+          Expanded(
                 child: _listadoDeseos(),
-              )
-            ],
           ),
           Align(
             alignment: Alignment.bottomRight,
@@ -41,32 +35,47 @@ class CartPage extends StatelessWidget {
   Widget _listadoDeseos() {
     return BlocBuilder<ListadeseosBloc, ListadeseosState>(
       builder: (context, state) {
-        //final _listadoBloc = BlocProvider.of<ListadeseosBloc>(context);
+        final _listadoBloc = BlocProvider.of<ListadeseosBloc>(context);
         final _listado = state.listado ?? [];
         // print(state.listado[0]);
-        return Container(
-          child: Center(
-            child: Text('${_listado.length}'),
-          ),
+        return ListView.builder(
+          itemCount: _listado.length,
+          itemBuilder: (_, i) {
+            return Dismissible(
+              key: Key(_listado[i].id.toString()),
+              background: _backGround(),
+              direction: DismissDirection.startToEnd,
+              onDismissed: (direction) {
+                // Remove the item from the data source.
+                _listadoBloc.add(DelItem(_listado[i]));
+                //items.removeAt(index);
+              },
+              child: Card(
+                elevation: 10.0,
+                color: Colors.grey[200],
+                child: ListTile(
+                  leading: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minWidth: 44,
+                      minHeight: 44,
+                      maxWidth: 44,
+                      maxHeight: 44,
+                    ),
+                    child: FadeInImage(
+                      fit: BoxFit.cover,
+                      placeholder: AssetImage('assets/images/no-image.jpg'),
+                      image: NetworkImage(_listado[i].urlImage),
+                    ),
+                  ),
+                  title: Text('${_listado[i].name}', style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),),
+                  subtitle: Align(
+                    child: Text('\$ ${_listado[i].price}'),
+                    alignment: Alignment.centerRight,),
+                ),
+              ),
+            );
+          },
         );
-
-        // ListView.builder(
-        //   itemCount: _listado.length,
-        //   itemBuilder: (_, i) {
-        //     return Dismissible(
-        //       key: Key(_listado[i].id.toString()),
-        //       direction: DismissDirection.startToEnd,
-        //       onDismissed: (direction) {
-        //         // Remove the item from the data source.
-        //         _listadoBloc.add(DelItem(_listado[i]));
-        //         //items.removeAt(index);
-        //       },
-        //       child: ListTile(
-        //         title: Text('${_listado[i].name}'),
-        //       ),
-        //     );
-        //   },
-        // );
       },
     );
   }
@@ -88,7 +97,6 @@ class CartPage extends StatelessWidget {
       child: ElevatedButton(
         style: raisedButtonStyle,
         onPressed: () {
-          // TODO: Insertar in wish list
           BlocProvider.of<ListadeseosBloc>(context).add(ClearLista());
           _showSnackbar(context);
         },
@@ -116,5 +124,21 @@ class CartPage extends StatelessWidget {
             () => Navigator.of(context).pop(),
           ),
         );
+  }
+
+  Widget  _backGround() {
+    return Container(
+    color: Colors.red,
+    child: Padding(
+      padding: const EdgeInsets.all(15),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Icon(Icons.delete, color: Colors.white),
+          Text('Eliminar producto', style: TextStyle(color: Colors.white)),
+        ],
+      ),
+    ),
+  );
   }
 }

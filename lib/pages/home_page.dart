@@ -74,12 +74,8 @@ class HomePage extends StatelessWidget {
           ),
         ),
         FutureBuilder<List<Item>>(
-          //TODO mas de dos peticiones
-
           future: _itemsProvider.requestItems(),
           builder: (context, snapshot) {
-            // print('status connection ${snapshot.connectionState}');
-
             switch (snapshot.connectionState) {
               case ConnectionState.done:
                 final data = snapshot.data;

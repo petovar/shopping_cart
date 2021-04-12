@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping_cart/bloc/listaDeseos/listadeseos_bloc.dart';
-import 'package:shopping_cart/bloc/whislist/wishlist_bloc.dart';
 import 'package:shopping_cart/models/item.dart';
 import 'package:shopping_cart/models/list_items.dart';
 
 class DetallePage extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  final WishlistBloc bloc = WishlistBloc();
 
   @override
   Widget build(BuildContext context) {
@@ -83,9 +81,7 @@ class DetallePage extends StatelessWidget {
       child: ElevatedButton(
         style: raisedButtonStyle,
         onPressed: () {
-          // TODO: Insertar in wish list
           BlocProvider.of<ListadeseosBloc>(context).add(AddItem(producto));
-          //bloc.sendEvent.add(AddProducto());
           _showSnackbar(context);
         },
         child: Text(

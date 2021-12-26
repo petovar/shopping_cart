@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shopping_cart/bloc/listaDeseos/listadeseos_bloc.dart';
-import 'package:shopping_cart/models/item.dart';
-import 'package:shopping_cart/models/list_items.dart';
+
+import '../../data/models/item.dart';
+import '../bloc/listaDeseos/listadeseos_bloc.dart';
 
 class DetallePage extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();

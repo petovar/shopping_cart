@@ -2,7 +2,8 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:shopping_cart/models/item.dart';
+
+import '../../../data/models/item.dart';
 
 part 'listadeseos_event.dart';
 part 'listadeseos_state.dart';

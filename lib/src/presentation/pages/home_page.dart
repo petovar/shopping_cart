@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
-// import 'package:shopping_cart/bloc/whislist/wishlist_bloc.dart';
-// import 'package:shopping_cart/models/producto_model.dart';
-// import 'package:shopping_cart/providers/productos_provider.dart';
-import 'package:shopping_cart/models/list_items.dart';
-import 'package:shopping_cart/providers/items_provider.dart';
-import 'package:shopping_cart/widgets/carrito.dart';
+import 'package:shopping_cart/src/data/models/item.dart';
+import 'package:shopping_cart/src/data/providers/items_provider.dart';
+
+
+import '../widgets/carrito.dart';
 
 class HomePage extends StatelessWidget {
   final ItemsProvider _itemsProvider = ItemsProvider();
-  
-  
-  // final WishlistBloc bloc = WishlistBloc();
-  // final _productosProvider = ProductosProvider();
+
 
   @override
   Widget build(BuildContext context) {
@@ -31,34 +27,6 @@ class HomePage extends StatelessWidget {
       body: _catalogoProductos(context),
     );
   }
-
-  // Widget _carrito(BuildContext context) {
-  //   return Stack(
-  //     alignment: AlignmentDirectional.topCenter,
-  //     children: [
-  //       IconButton(
-  //         icon: Icon(
-  //           Icons.shopping_cart,
-  //           color: Colors.yellowAccent,
-  //         ),
-  //         onPressed: () {
-  //           Navigator.of(context).pushNamed('cart', arguments: Null);
-  //         },
-  //       ),
-  //       StreamBuilder(
-  //         stream: bloc.counterStream,
-  //         //initialData: 0,
-  //         builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
-  //           print(snapshot);
-  //           return Text('${snapshot.data}',
-  //               style: TextStyle(
-  //                 fontSize: 12.0,
-  //               ));
-  //         },
-  //       ),
-  //     ],
-  //   );
-  // }
 
   Widget _catalogoProductos(BuildContext context) {
     return CustomScrollView(

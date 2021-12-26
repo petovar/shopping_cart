@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shopping_cart/bloc/listaDeseos/listadeseos_bloc.dart';
+
+import '../bloc/listaDeseos/listadeseos_bloc.dart';
 
 
 class CartPage extends StatelessWidget {
@@ -46,9 +47,7 @@ class CartPage extends StatelessWidget {
               background: _backGround(),
               direction: DismissDirection.startToEnd,
               onDismissed: (direction) {
-                // Remove the item from the data source.
                 _listadoBloc.add(DelItem(_listado[i]));
-                //items.removeAt(index);
               },
               child: Card(
                 elevation: 10.0,

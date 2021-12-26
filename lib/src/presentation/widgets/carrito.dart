@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shopping_cart/bloc/listaDeseos/listadeseos_bloc.dart';
+
+import '../bloc/listaDeseos/listadeseos_bloc.dart';
 
 class Carrito extends StatelessWidget {
 

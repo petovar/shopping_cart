@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shopping_cart/core/utiles/messages.dart';
 
 import '../bloc/listaDeseos/listadeseos_bloc.dart';
-
 
 class CartPage extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -22,7 +22,7 @@ class CartPage extends StatelessWidget {
       body: Column(
         children: <Widget>[
           Expanded(
-                child: _listadoDeseos(),
+            child: _listadoDeseos(),
           ),
           Align(
             alignment: Alignment.bottomRight,
@@ -66,10 +66,15 @@ class CartPage extends StatelessWidget {
                       image: NetworkImage(_listado[i].urlImage),
                     ),
                   ),
-                  title: Text('${_listado[i].name}', style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),),
+                  title: Text(
+                    '${_listado[i].name}',
+                    style:
+                        TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+                  ),
                   subtitle: Align(
                     child: Text('\$ ${_listado[i].price}'),
-                    alignment: Alignment.centerRight,),
+                    alignment: Alignment.centerRight,
+                  ),
                 ),
               ),
             );
@@ -97,7 +102,8 @@ class CartPage extends StatelessWidget {
         style: raisedButtonStyle,
         onPressed: () {
           BlocProvider.of<ListadeseosBloc>(context).add(ClearLista());
-          _showSnackbar(context);
+          Messages.info(context,
+              'Compra realizada con éxito !!!'); //          _showSnackbar(context);
         },
         child: Text(
           'Proceder...',
@@ -107,37 +113,38 @@ class CartPage extends StatelessWidget {
       ),
     );
   }
-  _showSnackbar(BuildContext context) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(
-          SnackBar(
-            backgroundColor: Colors.grey.shade400,
-            content: Text('Compra realizada con éxito !!!'),
-            duration: Duration(milliseconds: 1000),
-          ),
-        )
-        .closed
-        .then(
-          (value) => Future.delayed(
-            const Duration(milliseconds: 100),
-            () => Navigator.of(context).pop(),
-          ),
-        );
-  }
 
-  Widget  _backGround() {
+  // _showSnackbar(BuildContext context) {
+  //   ScaffoldMessenger.of(context)
+  //       .showSnackBar(
+  //         SnackBar(
+  //           backgroundColor: Colors.grey.shade400,
+  //           content: Text('Compra realizada con éxito !!!'),
+  //           duration: Duration(milliseconds: 1000),
+  //         ),
+  //       )
+  //       .closed
+  //       .then(
+  //         (value) => Future.delayed(
+  //           const Duration(milliseconds: 100),
+  //           () => Navigator.of(context).pop(),
+  //         ),
+  //       );
+  // }
+
+  Widget _backGround() {
     return Container(
-    color: Colors.red,
-    child: Padding(
-      padding: const EdgeInsets.all(15),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Icon(Icons.delete, color: Colors.white),
-          Text('Eliminar producto', style: TextStyle(color: Colors.white)),
-        ],
+      color: Colors.red,
+      child: Padding(
+        padding: const EdgeInsets.all(15),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Icon(Icons.delete, color: Colors.white),
+            Text('Eliminar producto', style: TextStyle(color: Colors.white)),
+          ],
+        ),
       ),
-    ),
-  );
+    );
   }
 }

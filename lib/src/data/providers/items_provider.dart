@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter/rendering.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/list_items.dart';
@@ -21,16 +20,5 @@ class ItemsProvider {
       final items = ListItems.fromJson(data);
       return items.items;
     }
-
-    // print('Esta es la respuesta');
-
-    // print('--------------');
-    // print(resp.statusCode);
-    // print('--------------');
-    // Map<String, dynamic> data = jsonDecode(resp.body);
-    // print(data);
-
-    // final items = ListItems.fromJson(data);
-    // return items.items;
   }
 }

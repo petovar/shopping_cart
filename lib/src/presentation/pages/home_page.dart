@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:shopping_cart/src/data/models/item.dart';
 import 'package:shopping_cart/src/data/providers/items_provider.dart';
 
-
 import '../widgets/carrito.dart';
 
 class HomePage extends StatelessWidget {
   final ItemsProvider _itemsProvider = ItemsProvider();
-
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +32,8 @@ class HomePage extends StatelessWidget {
         SliverList(
           delegate: SliverChildListDelegate(
             <Widget>[
-
               SizedBox(height: 10),
-              _tituloSeccion('Catálogo'),
+              _tituloSeccion('Catálogo de artículos'),
               SizedBox(height: 10),
             ],
           ),
@@ -127,11 +124,19 @@ class HomePage extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(left: 8.0),
-            child: Text(
-              '\$ ${clothe.price}',
-              style: TextStyle(
-                fontSize: 16,
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    '\$ ${clothe.price.toStringAsFixed(2)}',
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],

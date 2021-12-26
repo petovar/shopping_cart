@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shopping_cart/core/utiles/messages.dart';
 
 import '../../data/models/item.dart';
 import '../bloc/listaDeseos/listadeseos_bloc.dart';
@@ -21,7 +22,7 @@ class DetallePage extends StatelessWidget {
             padding: EdgeInsets.zero,
             children: <Widget>[
               _image(_clothe, _size),
-              _title(_clothe.name),
+              _title(_clothe.name, _clothe.price),
               _content(),
             ],
           ),
@@ -47,12 +48,21 @@ class DetallePage extends StatelessWidget {
     );
   }
 
-  Widget _title(String title) {
+  Widget _title(String title, int price) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-      child: Text(
-        title.toUpperCase(),
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            title.toUpperCase(),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+          ),
+          Text(
+            '\$ ${price.toStringAsFixed(2)}',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+        ],
       ),
     );
   }
@@ -60,7 +70,7 @@ class DetallePage extends StatelessWidget {
   Widget _content() {
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20, bottom: 80),
-      child: Text('Detalles acerca del productos'),
+      child: Text('Detalles acerca del producto...'),
     );
   }
 
@@ -82,7 +92,8 @@ class DetallePage extends StatelessWidget {
         style: raisedButtonStyle,
         onPressed: () {
           BlocProvider.of<ListadeseosBloc>(context).add(AddItem(producto));
-          _showSnackbar(context);
+          Messages.info(context, 'Artículo añadido al carrito');
+          // _showSnackbar(context);
         },
         child: Text(
           'Añadir al carrito',
@@ -93,21 +104,21 @@ class DetallePage extends StatelessWidget {
     );
   }
 
-  _showSnackbar(BuildContext context) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(
-          SnackBar(
-            backgroundColor: Colors.grey.shade400,
-            content: Text('Artículo añadido al carrito'),
-            duration: Duration(milliseconds: 1000),
-          ),
-        )
-        .closed
-        .then(
-          (value) => Future.delayed(
-            const Duration(milliseconds: 100),
-            () => Navigator.of(context).pop(),
-          ),
-        );
-  }
+  // _showSnackbar(BuildContext context) {
+  //   ScaffoldMessenger.of(context)
+  //       .showSnackBar(
+  //         SnackBar(
+  //           backgroundColor: Colors.grey.shade400,
+  //           content: Text('Artículo añadido al carrito'),
+  //           duration: Duration(milliseconds: 1000),
+  //         ),
+  //       )
+  //       .closed
+  //       .then(
+  //         (value) => Future.delayed(
+  //           const Duration(milliseconds: 100),
+  //           () => Navigator.of(context).pop(),
+  //         ),
+  //       );
+  // }
 }
